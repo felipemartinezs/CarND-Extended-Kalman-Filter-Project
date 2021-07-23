@@ -32,6 +32,10 @@ void KalmanFilter::Update(const VectorXd &z) {
   /**
   TODO:
     * update the state by using Kalman Filter equations
+    ===================================================
+    Lesson 24 - 7 Kalman Filtr Equatiom in C++ Part 1
+                13 Laser Measurements Part 2 file Kalma_filter.cpp
+    =====================================================
   */
   VectorXd z_pred = H_ * x_;
   VectorXd y = z - z_pred;
