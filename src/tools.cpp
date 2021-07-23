@@ -51,6 +51,9 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
   /**
   TODO:
     * Calculate a Jacobian here.
+    ========================================================
+    Leson 24 - 19. Jacobian Matrix Part 1
+    =========================================================
   */
   MatrixXd Hj(3, 4);
   //recover state parameters
