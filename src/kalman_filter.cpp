@@ -1,7 +1,6 @@
 #include <math.h>       /* atan2 */
 #include "kalman_filter.h"
 
-using namespace std;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
@@ -35,7 +34,7 @@ void KalmanFilter::Update(const VectorXd &z) {
     * update the state by using Kalman Filter equations
     ===================================================
     Lesson 24 - 7 Kalman Filtr Equatiom in C++ Part 1
-                13 Laser Measurements Part 2 file Kalma_filter.cpp
+                23
     =====================================================
   */
   VectorXd z_pred = H_ * x_;
@@ -69,8 +68,6 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   VectorXd z_pred(3);
   z_pred << rho, phi, rho_dot;
   VectorXd y = z - z_pred;
-  y(1) = atan2(sin(y(1)),cos(y(1)));
-
   MatrixXd Ht = H_.transpose();
   MatrixXd S = H_ * P_ * Ht + R_;
   MatrixXd Si = S.inverse();

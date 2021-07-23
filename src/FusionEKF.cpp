@@ -1,14 +1,11 @@
 #include "FusionEKF.h"
-#include <iostream>
-#include "Eigen/Dense"
 #include "tools.h"
-#include <math.h>
-#include "kalman_filter.h"
+#include "Eigen/Dense"
+#include <iostream>
 
+using namespace std;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
-using std::cout;
-using std::endl;
 using std::vector;
 
 /*
@@ -42,7 +39,9 @@ FusionEKF::FusionEKF() {
   H_laser_ << 1, 0, 0, 0,
               0, 1, 0, 0;
 
-  
+  Hj_ << 1, 1, 0, 0,
+         1, 1, 0, 0,
+         1, 1, 1, 1; 
 
   //the initial transition matrix F_
   ekf_.F_ = MatrixXd(4, 4);
@@ -57,8 +56,6 @@ FusionEKF::FusionEKF() {
              0, 1, 0, 0,
              0, 0, 1000, 0,
              0, 0, 0, 1000;
-
-  ekf_.Q_=MatrixXd(4,4);
 }
 
 /**
@@ -88,9 +85,8 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
       /**
        Initialize state.
       */
-      float x=measurement_pack.raw_measurements_[0];
-      float y=measurement_pack.raw_measurements_[1];
-      ekf_.x_<<x,y,0,0;
+      ekf_.x_(0) = measurement_pack.raw_measurements_(0);
+      ekf_.x_(1) = measurement_pack.raw_measurements_(1);
     }
     else if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
       /**
@@ -103,8 +99,6 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
       ekf_.x_(1) = ro     * sin(phi);      
       ekf_.x_(2) = ro_dot * cos(phi);
       ekf_.x_(3) = ro_dot * sin(phi);
-
-      ekf_.x_<<x,y,0,0;
     }
 
     previous_timestamp_ = measurement_pack.timestamp_;
@@ -135,10 +129,8 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
   float dt_4 = dt_3 * dt;
 
   //Modify the F matrix so that the time is integrated
-  ekf_.F_<<1,0,dt,0,
-  0,1,0,dt,
-  0,0,1,0,
-  0,0,0,1;
+  ekf_.F_(0, 2) = dt;
+  ekf_.F_(1, 3) = dt;
 
   //set the acceleration noise components
   float noise_ax = 9;
@@ -165,21 +157,15 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
   if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
     // Radar updates
-    
+    Tools tools;
     Hj_ = tools.CalculateJacobian(ekf_.x_);
-    ekf_.H_=MatrixXd(3,4);
-    ekf_.R_=MatrixXd(3,3);
     ekf_.H_ = Hj_;
     ekf_.R_ = R_radar_;
     ekf_.UpdateEKF(measurement_pack.raw_measurements_);
   } else {
     // Laser updates
-    ekf_.H_=MatrixXd(2,4);
     ekf_.H_ = H_laser_;
-    ekf_.R_=MatrixXd(2,2);
     ekf_.R_ = R_laser_;
-
-    ekf_.Init(ekf_.x_, ekf_.P_, ekf_.F_, ekf_.H_, ekf_.R_, ekf_.Q_);
     ekf_.Update(measurement_pack.raw_measurements_);
   }
 
