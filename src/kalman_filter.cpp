@@ -58,9 +58,9 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   TODO:
     * update the state by using Extended Kalman Filter equations
   */
-  double rho = sqrt(x_(0)*x_(0) + x_(1)*x_(1));
-  double phi = atan2(x_(1), x_(0));
-  double rho_dot;
+  float rho = sqrt(x_(0)*x_(0) + x_(1)*x_(1));
+  float phi = atan2(x_(1), x_(0));
+  float rho_dot;
   if (fabs(rho) < 0.0001) {
     rho_dot = 0;
   } else {
