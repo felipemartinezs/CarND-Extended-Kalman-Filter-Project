@@ -4,8 +4,6 @@
 using Eigen::VectorXd;
 using Eigen::MatrixXd;
 using std::vector;
-using std::cout;
-using std::endl;
 
 Tools::Tools() {}
 
@@ -17,8 +15,7 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
   TODO:
     * Calculate the RMSE here.
     ===============================================================
-    Leson 24 - 23 Evaluating KF Performance Part 1
-    ===============================================================
+    Leson 24 - 23 Evaluating KF Performance
   */
   VectorXd rmse(4);
   rmse << 0, 0, 0, 0;
