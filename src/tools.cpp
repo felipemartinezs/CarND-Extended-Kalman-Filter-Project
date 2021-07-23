@@ -14,6 +14,9 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
   /**
   TODO:
     * Calculate the RMSE here.
+    ===============================================================
+    Leson 24 - 23 Evaluating KF Performance Part 1
+    ===============================================================
   */
   VectorXd rmse(4);
   rmse << 0, 0, 0, 0;
