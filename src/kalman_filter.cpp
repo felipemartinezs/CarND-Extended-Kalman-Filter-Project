@@ -57,6 +57,22 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   TODO:
     * update the state by using Extended Kalman Filter equations
   */
+
+  /* Normalizing the angle
+  ======================================================*/
+ VectorXd y = z - h_;
+  // Check if angle is within -pi to pi, if not then make it between -pi to pi
+  if(y[1] < -M_PI){
+    y[1] += ((double)2 * M_PI);
+    }
+  if(y[1] > M_PI){
+      y[1] -= ((double)2 * M_PI);
+  }
+   
+  /*=========================================================*/
+
+
+
   float rho = sqrt(x_(0)*x_(0) + x_(1)*x_(1));
   float phi = atan2(x_(1), x_(0));
   float rho_dot;
