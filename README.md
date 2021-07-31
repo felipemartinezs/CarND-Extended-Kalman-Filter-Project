@@ -6,9 +6,9 @@
 # Extended Kalman Filter Project 
 Self-Driving Car Engineer Nanodegree Program
 
-This project consists of implementing the extended Kalman filter in C ++. You should provide simulated radar and lidar measurements that detect a bicycle moving around your vehicle. It will use a Kalman filter, lidar measurements, and radar measurements to track the bike's position and speed.
+This project consists of implementing the extended Kalman filter in C ++. You should provide simulated RADAR and LIDAR measurements that detect a bicycle moving around your vehicle. It will use a Kalman filter, lidar measurements, and radar measurements to track the bike's position and speed.
 
-Will identify Lidar measurements with red circles and radar measurements with blue circles with an arrow pointing in the direction of the observed angle. The estimation markers are green triangles.
+Will identify LIDAR measurements with red circles and RADAR measurements with blue circles with an arrow pointing in the direction of the observed angle. The estimation markers are green triangles.
 
 
 <br>
